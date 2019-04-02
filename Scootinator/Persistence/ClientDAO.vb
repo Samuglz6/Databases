@@ -34,7 +34,6 @@
             c.TelephNumber = Convert.ToInt32(Me._dbReader(2))
             c.Address = Convert.ToString(Me._dbReader(3))
             c.Email = Convert.ToString(Me._dbReader(4))
-
         End While
     End Sub
 
@@ -49,7 +48,7 @@
     End Sub
 
     Public Function Update(c As Client)
-        Return DBBroker.GetBroker.Change("UPDATE CLIENTS SET ClientName = '" & c.ClientName & "' WHERE ClientID = '" & c.ClientId & "';")
+        Return DBBroker.GetBroker.Change("UPDATE CLIENTS SET ClientName = '" & c.ClientName & "', TelepthNumber = '" & c.TelephNumber & "', Address = '" & c.Address & "', Email = '" & c.Email & "' WHERE ClientId = '" & c.ClientId & "';")
     End Function
 
     Public Function Delete(c As Client)

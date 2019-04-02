@@ -22,16 +22,27 @@ Partial Class Booking
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.SuspendLayout()
+        '
+        'FlowLayoutPanel1
+        '
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(454, 159)
+        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(200, 100)
+        Me.FlowLayoutPanel1.TabIndex = 0
         '
         'Booking
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(733, 450)
+        Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.Name = "Booking"
         Me.Text = "Form1"
         Me.ResumeLayout(False)
 
     End Sub
+
+    Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
 End Class

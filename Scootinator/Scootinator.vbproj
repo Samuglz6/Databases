@@ -14,6 +14,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -88,10 +88,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\ScooterType.vb" />
     <Compile Include="Domain\Client.vb" />
     <Compile Include="Domain\Scooter.vb" />
     <Compile Include="Persistence\ClientDAO.vb" />
     <Compile Include="Persistence\DBBroker.vb" />
+    <Compile Include="Persistence\ScooterDAO.vb" />
+    <Compile Include="Persistence\ScooterTypeDAO.vb" />
     <Compile Include="Presentation\Booking.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -114,10 +117,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Presentation\Clients_info.Designer.vb">
-      <DependentUpon>Clients_info.vb</DependentUpon>
+    <Compile Include="Presentation\Clients.Designer.vb">
+      <DependentUpon>Clients.vb</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Clients_info.vb">
+    <Compile Include="Presentation\Clients.vb">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
@@ -131,8 +134,8 @@
     <EmbeddedResource Include="Presentation\Booking.resx">
       <DependentUpon>Booking.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Clients_info.resx">
-      <DependentUpon>Clients_info.vb</DependentUpon>
+    <EmbeddedResource Include="Presentation\Clients.resx">
+      <DependentUpon>Clients.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
