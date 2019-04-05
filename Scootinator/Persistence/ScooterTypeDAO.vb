@@ -28,6 +28,7 @@
         Me._dbReader = DBBroker.GetBroker.Read("SELECT * FROM SCOOT_TYPE WHERE TypeID = '" & st.TypeID & "';")
 
         While Me._dbReader.Read
+
             st.TypeID = Convert.ToString(Me._dbReader(0))
             st.Brand = Convert.ToString(Me._dbReader(1))
             st.MaxWeight = Convert.ToInt32(Me._dbReader(2))
