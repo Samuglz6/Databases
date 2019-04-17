@@ -51,6 +51,15 @@
         End Set
     End Property
 
+    Public Property ClientDAO As ClientDAO
+        Get
+            Return Me._daoClient
+        End Get
+        Set(ByVal value As ClientDAO)
+            Me._daoClient = value
+        End Set
+    End Property
+
     Public Sub New()
         Me._daoClient = New ClientDAO
     End Sub
