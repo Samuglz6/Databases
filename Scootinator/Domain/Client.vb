@@ -1,5 +1,5 @@
 ﻿Public Class Client
-    Private _clientId As Integer
+    Private _clientId As String
     Private _clientName As String
     Private _telephNumber As Integer
     Private _address As String

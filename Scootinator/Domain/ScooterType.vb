@@ -51,6 +51,15 @@
         End Set
     End Property
 
+    Public Property ScooterTypeDAO As ScooterTypeDAO
+        Get
+            Return Me._daoScooterType
+        End Get
+        Set(value As ScooterTypeDAO)
+            Me._daoScooterType = value
+        End Set
+    End Property
+
     Public Sub New()
         Me._daoScooterType = New ScooterTypeDAO
     End Sub
@@ -62,5 +71,25 @@
         Me._maxSpeed = maxSpeed
         Me._pricePerHou = pricePerHou
         Me._daoScooterType = New ScooterTypeDAO
+    End Sub
+
+    Public Sub Insert()
+        Me._daoScooterType.Insert(Me)
+    End Sub
+
+    Public Sub Read()
+        Me._daoScooterType.Read(Me)
+    End Sub
+
+    Public Sub ReadAll()
+        Me._daoScooterType.ReadAll()
+    End Sub
+
+    Public Sub Update()
+        Me._daoScooterType.Update(Me)
+    End Sub
+
+    Public Sub Delete()
+        Me._daoScooterType.Delete(Me)
     End Sub
 End Class
