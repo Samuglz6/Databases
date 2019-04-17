@@ -2,9 +2,10 @@
     Private _ScooterId As Integer
     Private _Description As String
     Private _Type As Integer
-    Private _scooterDao As ScooterDAO
+    Private _daoScooter As ScooterDAO
 
     Public Sub New()
+        Me._daoScooter = New ScooterDAO
     End Sub
 
     Public Sub New(ScooterId As Integer, Description As String, Type As Integer)
@@ -41,25 +42,34 @@
         End Set
     End Property
 
+    Public Property ScooterDAO() As ScooterDAO
+        Get
+            Return Me._daoScooter
+        End Get
+        Set(value As ScooterDAO)
+            Me._daoScooter = value
+        End Set
+    End Property
+
 
     Public Sub Insert()
-        Me._scooterDao.Insert(Me)
+        Me._daoScooter.Insert(Me)
     End Sub
 
     Public Sub Read()
-        Me._scooterDao.Read(Me)
+        Me._daoScooter.Read(Me)
     End Sub
 
     Public Sub ReadAll()
-        Me._scooterDao.ReadAll()
+        Me._daoScooter.ReadAll()
     End Sub
 
     Public Sub Update()
-        Me._scooterDao.Update(Me)
+        Me._daoScooter.Update(Me)
     End Sub
 
     Public Sub Delete()
-        Me._scooterDao.Delete(Me)
+        Me._daoScooter.Delete(Me)
     End Sub
 
 End Class

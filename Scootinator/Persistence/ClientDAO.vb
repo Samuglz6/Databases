@@ -29,7 +29,7 @@
         Me._dbReader = DBBroker.GetBroker.Read("SELECT * FROM CLIENTS WHERE ClientID = '" & c.ClientId & "';")
 
         While Me._dbReader.Read
-            c.ClientId = Convert.ToString(Me._dbReader(0))
+            c.ClientId = Convert.ToInt32(Me._dbReader(0))
             c.ClientName = Convert.ToString(Me._dbReader(1))
             c.TelephNumber = Convert.ToInt32(Me._dbReader(2))
             c.Address = Convert.ToString(Me._dbReader(3))
