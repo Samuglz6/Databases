@@ -12,11 +12,12 @@
     Private Sub Connect_button_Click(sender As Object, e As EventArgs) Handles connect_button.Click
         Try
             DBBroker.GetBroker(dbPath_Text.Text)
+            SetConnected()
         Catch ex As Exception
             MessageBox.Show(ex.Message, ex.Source)
         End Try
 
-        SetConnected()
+
         Dispose()
     End Sub
 

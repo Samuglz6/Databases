@@ -88,9 +88,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Booking.vb" />
     <Compile Include="Domain\ScooterType.vb" />
     <Compile Include="Domain\Client.vb" />
     <Compile Include="Domain\Scooter.vb" />
+    <Compile Include="Persistence\BookingDAO.vb" />
     <Compile Include="Persistence\ClientDAO.vb" />
     <Compile Include="Persistence\DBBroker.vb" />
     <Compile Include="Persistence\ScooterDAO.vb" />

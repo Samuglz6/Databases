@@ -21,7 +21,7 @@
     End Sub
 
     Public Function Insert(st As ScooterType) As Integer
-        Return DBBroker.GetBroker.Change("INSERT INTO SCOOT_TYPE VALUES(" & st.TypeID & ",'" & st.Brand & "'," & st.MaxWeight & "," & st.MaxSpeed & "," & st.PricePerHou & ";")
+        Return DBBroker.GetBroker.Change("INSERT INTO SCOOT_TYPE VALUES(" & st.TypeID & ",'" & st.Brand & "'," & st.MaxWeight & "," & st.MaxSpeed & "," & st.PricePerHou & ");")
     End Function
 
     Public Sub Read(st As ScooterType)

@@ -21,7 +21,7 @@
     End Sub
 
     Public Function Insert(s As Scooter) As Integer
-        Return DBBroker.GetBroker.Change("INSERT INTO SCOOTER VALUES(" & s.ScooterId & ",'" & s.Description & "'," & s.Type & ";")
+        Return DBBroker.GetBroker.Change("INSERT INTO SCOOTERS VALUES(" & s.ScooterId & ",'" & s.Description & "'," & s.Type & ");")
     End Function
 
     Public Sub Read(s As Scooter)
@@ -45,11 +45,10 @@
     End Sub
 
     Public Function Update(s As Scooter)
-        Return DBBroker.GetBroker.Change("UPDATE SCOOTERS SET Description = '" & s.Description & "', Type = '" & s.Type & "' WHERE ScooterId = '" & s.ScooterId & "';")
+        Return DBBroker.GetBroker.Change("UPDATE SCOOTERS SET Description = '" & s.Description & "', Type = " & s.Type & " WHERE ScooterId = " & s.ScooterId & ";")
     End Function
 
     Public Function Delete(s As Scooter)
-        Return DBBroker.GetBroker.Change("DELETE FROM SCOOTERS WHERE ScooterId = '" & s.ScooterId & "';")
+        Return DBBroker.GetBroker.Change("DELETE FROM SCOOTERS WHERE ScooterId = " & s.ScooterId & ";")
     End Function
-
 End Class

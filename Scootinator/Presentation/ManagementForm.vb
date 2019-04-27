@@ -102,7 +102,9 @@
         If (form.Text = "Clients" Or form.Text = "Scooters" Or form.Text = "ScooterTypes") Then
             For Each control In form.Controls
                 If TypeOf control Is TextBox Then
-                    If control.Text Like Nothing Then
+                    If control.Name Like "clientAddress_textbox" Or control.Name Like "scooterDescription_textbox" Then
+                        Return False
+                    ElseIf control.Text Like Nothing Then
                         Return True
                     End If
                 ElseIf TypeOf control Is RichTextBox Then
@@ -133,7 +135,7 @@
         Dim client As Client
 
         If IsEmpty(sender) Then
-            MessageBox.Show("To modify information, all fields must be fulfilled.")
+            MessageBox.Show("To modify information, all fields except address must be filled.")
         ElseIf clientPhone_textbox.Text.Length <> 9 Then
             MessageBox.Show("Telephon number must cointain 9 digits.")
         ElseIf clientID_textbox.Text Like clients_listbox.SelectedItem Then
@@ -155,15 +157,13 @@
         Dim client As Client
 
         If IsEmpty(sender) Then
-            MessageBox.Show("All fields must be fullfilled in order to add a new Client.")
+            MessageBox.Show("All fields except address must be filled in order to add a new Client.")
         ElseIf clientID_textbox.Text.Length <> 9 Then
             MessageBox.Show("ID must contains 8 numbers followed by a letter from A to Z.")
         ElseIf clientPhone_textbox.Text.Length <> 9 Then
             MessageBox.Show("Telephon number must cointain 9 digits.")
         ElseIf clientID_textbox.Text Like "########[A-Z]" Then
-            MessageBox.Show(clientEmail_textbox.Text)
             client = New Client(clientID_textbox.Text, clientName_textbox.Text, clientPhone_textbox.Text, clientAddress_textbox.Text, clientEmail_textbox.Text)
-
             Try
                 client.Insert()
                 clients_listbox.Items.Add(client.ClientId)
@@ -179,7 +179,7 @@
         Dim client As New Client
 
         If clientID_textbox.Text Like "" Then
-            MessageBox.Show("At least ID field has to be fullfilled in order to delete a client.")
+            MessageBox.Show("At least ID field has to be filled in order to delete a client.")
         ElseIf clientID_textbox.Text Like "########[A-Z]" Then
             client.ClientId = clientID_textbox.Text
 
@@ -199,11 +199,11 @@
     Private Sub Scooters_modify_button_Click(sender As Object, e As EventArgs) Handles scooter_modify_button.Click
         Dim scooter As Scooter
 
-        If scooterID_textbox.Text Like "" Or scooter_type_textbox.Text Like "" Then
-            MessageBox.Show("To modify information, scooter id and scooter type has to be fullfilled.")
+        If IsEmpty(sender) Then
+            MessageBox.Show("To modify information, scooter id and scooter type has to be filled.")
         ElseIf scooterID_textbox.Text Like scooter_listbox.SelectedItem Then
             Try
-                scooter = New Scooter(Convert.ToInt32(scooterID_textbox.Text), Convert.ToString(scooterDescription_textbox.Text), Convert.ToInt32(scooter_type_textbox.Text))
+                scooter = New Scooter(Convert.ToInt32(scooterID_textbox.Text), scooterDescription_textbox.Text, Convert.ToInt32(scooter_type_textbox.Text))
                 scooter.Update()
                 MessageBox.Show("Successfully modified.")
             Catch ex As Exception
@@ -216,23 +216,17 @@
     End Sub
 
     Private Sub Scooters_add_button_Click(sender As Object, e As EventArgs) Handles scooters_add_button.Click
-        Dim client As Client
+        Dim scooter As Scooter
 
-        If clientID_textbox.Text Like "" Or clientName_textbox.Text Like "" Then
-            MessageBox.Show("All fields must be fullfilled in order to add a new Person.")
-        ElseIf clientID_textbox.Text.Length <> 9 Then
-            MessageBox.Show("ID must contains 8 numbers followed by a letter from A to Z.")
-        ElseIf clientPhone_textbox.Text.Length <> 9 Then
-            MessageBox.Show("Telephon number must cointain 9 digits.")
-        ElseIf clientID_textbox.Text Like "########[A-Z]" Then
-            MessageBox.Show(clientEmail_textbox.Text)
-            client = New Client(clientID_textbox.Text, clientName_textbox.Text, clientPhone_textbox.Text, clientAddress_textbox.Text, clientEmail_textbox.Text)
-
+        If IsEmpty(sender) Then
+            MessageBox.Show("All fields except description must be filled in order to add a new Scooter.")
+        Else
+            scooter = New Scooter(Convert.ToInt32(scooterID_textbox.Text), scooterDescription_textbox.Text, Convert.ToInt32(scooter_type_textbox.Text))
             Try
-                client.Insert()
-                clients_listbox.Items.Add(client.ClientId)
-                MessageBox.Show("The information of that client has been added successfully.")
-                Clients_clear_button_Click(sender, e)
+                scooter.Insert()
+                scooter_listbox.Items.Add(scooter.ScooterId)
+                MessageBox.Show("The information of that scooter has been added successfully.")
+                Scooters_clear_button_Click(sender, e)
             Catch ex As Exception
                 MessageBox.Show(ex.Message, ex.Source)
             End Try
@@ -240,23 +234,75 @@
     End Sub
 
     Private Sub Scooters_delete_button_Click(sender As Object, e As EventArgs) Handles scooters_delete_button.Click
-        Dim client As New Client
+        Dim scooter As New Scooter
 
-        If clientID_textbox.Text Like "" Then
-            MessageBox.Show("At least ID field has to be fullfilled in order to delete a client.")
-        ElseIf clientID_textbox.Text Like "########[A-Z]" Then
-            client.ClientId = clientID_textbox.Text
-
+        If scooterID_textbox.Text Like "" Then
+            MessageBox.Show("At least ID field has to be filled in order to delete a Scooter.")
+        Else
+            scooter.ScooterId = Convert.ToInt32(scooterID_textbox.Text)
             Try
-                client.Delete()
-                clients_listbox.Items.Remove(client.ClientId)
+                scooter.Delete()
+                scooter_listbox.Items.Remove(scooter.ScooterId)
                 MessageBox.Show("Successfully deleted")
-                Clients_clear_button_Click(sender, e)
+                Scooters_clear_button_Click(sender, e)
             Catch ex As Exception
                 MessageBox.Show(ex.Message, ex.Source)
             End Try
-        ElseIf clientID_textbox.Text.Length <> 9 Then
-            MessageBox.Show("ID needs to contains 8 numbers followed by a letter from A to Z")
+        End If
+    End Sub
+
+    Private Sub ScooterTypes_add_button_Click(sender As Object, e As EventArgs) Handles scooterTypes_add_button.Click
+        Dim scooterType As ScooterType
+
+        If IsEmpty(sender) Then
+            MessageBox.Show("All fields except description must be filled in order to add a new Scooter Type.")
+        Else
+            scooterType = New ScooterType(Convert.ToInt32(scooterTypeID_textbox.Text), Convert.ToString(scooterTypeBrand_textbox.Text), Convert.ToInt32(scooterTypeWeight_textbox.Text), Convert.ToInt32(scooterTypeSpeed_textbox.Text), Convert.ToInt32(scooterTypePrice_textbox.Text))
+            Try
+                scooterType.Insert()
+                scooterType_listbox.Items.Add(scooterType.TypeID)
+                MessageBox.Show("The information of that Scooter type has been added successfully.")
+                ScooterTypes_clear_button_Click(sender, e)
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, ex.Source)
+            End Try
+        End If
+    End Sub
+
+    Private Sub ScooterTypes_modify_button_Click(sender As Object, e As EventArgs) Handles scooterTypes_modify_button.Click
+        Dim scooterType As ScooterType
+
+        If IsEmpty(sender) Then
+            MessageBox.Show("To modify information, scooter id and scooter type has to be filled.")
+        ElseIf scooterTypeID_textbox.Text Like scooterType_listbox.SelectedItem Then
+            Try
+                scooterType = New ScooterType(Convert.ToInt32(scooterTypeID_textbox.Text), Convert.ToString(scooterTypeBrand_textbox.Text), Convert.ToInt32(scooterTypeWeight_textbox.Text), Convert.ToInt32(scooterTypeSpeed_textbox.Text), Convert.ToInt32(scooterTypePrice_textbox.Text))
+                scooterType.Update()
+                MessageBox.Show("Successfully modified.")
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, ex.Source)
+            End Try
+        Else
+            MessageBox.Show("The ID can't be modified.")
+            scooterTypeID_textbox.Text = scooterType_listbox.SelectedItem
+        End If
+    End Sub
+
+    Private Sub ScooterTypes_delete_button_Click(sender As Object, e As EventArgs) Handles scooterTypes_delete_button.Click
+        Dim scooterType As New ScooterType
+
+        If scooterTypeID_textbox.Text Like "" Then
+            MessageBox.Show("In order to delete a scooterType id has to be filled")
+        Else
+            scooterType.TypeID = scooterTypeID_textbox.Text
+            Try
+                scooterType.Delete()
+                scooterType_listbox.Items.Remove(scooterType.TypeID)
+                MessageBox.Show("Successfully deleted")
+                ScooterTypes_clear_button_Click(sender, e)
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, ex.Source)
+            End Try
         End If
     End Sub
 End Class

@@ -1,7 +1,7 @@
 ﻿Public Class Client
     Private _clientId As String
     Private _clientName As String
-    Private _telephNumber As Integer
+    Private _telephNumber As String
     Private _address As String
     Private _email As String
     Private _daoClient As ClientDAO
@@ -64,7 +64,7 @@
         Me._daoClient = New ClientDAO
     End Sub
 
-    Public Sub New(clientId As String, clientName As String, telephNumber As Integer, address As String, email As String)
+    Public Sub New(clientId As String, clientName As String, telephNumber As String, address As String, email As String)
         Me._clientId = clientId
         Me._clientName = clientName
         Me._telephNumber = telephNumber
