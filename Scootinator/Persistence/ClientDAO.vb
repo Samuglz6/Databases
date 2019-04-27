@@ -22,7 +22,7 @@
     End Sub
 
     Public Function Insert(c As Client) As Integer
-        Return DBBroker.GetBroker.Change("INSERT INTO CLIENTS VALUES('" & c.ClientId & "','" & c.ClientName & "','" & c.TelephNumber & "','" & c.Address & "','" & c.Email & "';")
+        Return DBBroker.GetBroker.Change("INSERT INTO CLIENTS VALUES('" & c.ClientId & "','" & c.ClientName & "','" & c.TelephNumber & "','" & c.Address & "','" & c.Email & "');")
     End Function
 
     Public Sub Read(c As Client)
@@ -48,7 +48,7 @@
     End Sub
 
     Public Function Update(c As Client)
-        Return DBBroker.GetBroker.Change("UPDATE CLIENTS SET ClientName = '" & c.ClientName & "', TelepthNumber = '" & c.TelephNumber & "', Address = '" & c.Address & "', Email = '" & c.Email & "' WHERE ClientId = '" & c.ClientId & "';")
+        Return DBBroker.GetBroker.Change("UPDATE CLIENTS SET ClientName = '" & c.ClientName & "', TelephNumber = '" & c.TelephNumber & "', Address = '" & c.Address & "', Email = '" & c.Email & "' WHERE ClientId = '" & c.ClientId & "';")
     End Function
 
     Public Function Delete(c As Client)

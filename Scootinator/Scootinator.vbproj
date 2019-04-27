@@ -95,17 +95,29 @@
     <Compile Include="Persistence\DBBroker.vb" />
     <Compile Include="Persistence\ScooterDAO.vb" />
     <Compile Include="Persistence\ScooterTypeDAO.vb" />
-    <Compile Include="Presentation\Connection.Designer.vb">
-      <DependentUpon>Connection.vb</DependentUpon>
+    <Compile Include="Presentation\ConnectionForm.Designer.vb">
+      <DependentUpon>ConnectionForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Connection.vb">
+    <Compile Include="Presentation\ConnectionForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Management.vb">
+    <Compile Include="Presentation\RentingForm.Designer.vb">
+      <DependentUpon>RentingForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\RentingForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Management.Designer.vb">
-      <DependentUpon>Management.vb</DependentUpon>
+    <Compile Include="Presentation\MainForm.Designer.vb">
+      <DependentUpon>MainForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\MainForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\ManagementForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\ManagementForm.Designer.vb">
+      <DependentUpon>ManagementForm.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -131,11 +143,17 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Connection.resx">
-      <DependentUpon>Connection.vb</DependentUpon>
+    <EmbeddedResource Include="Presentation\ConnectionForm.resx">
+      <DependentUpon>ConnectionForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Management.resx">
-      <DependentUpon>Management.vb</DependentUpon>
+    <EmbeddedResource Include="Presentation\MainForm.resx">
+      <DependentUpon>MainForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\ManagementForm.resx">
+      <DependentUpon>ManagementForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\RentingForm.resx">
+      <DependentUpon>RentingForm.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

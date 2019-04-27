@@ -12,6 +12,7 @@
         Me._ScooterId = ScooterId
         Me._Description = Description
         Me._Type = Type
+        Me._daoScooter = New ScooterDAO
     End Sub
 
 

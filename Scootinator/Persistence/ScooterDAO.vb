@@ -45,7 +45,7 @@
     End Sub
 
     Public Function Update(s As Scooter)
-        Return DBBroker.GetBroker.Change("UPDATE SCOOTERS SET Description = '" & s.Description & "' WHERE ScooterId = '" & s.ScooterId & "';")
+        Return DBBroker.GetBroker.Change("UPDATE SCOOTERS SET Description = '" & s.Description & "', Type = '" & s.Type & "' WHERE ScooterId = '" & s.ScooterId & "';")
     End Function
 
     Public Function Delete(s As Scooter)
