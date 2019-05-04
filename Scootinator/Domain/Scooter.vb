@@ -73,4 +73,11 @@
         Me._daoScooter.Delete(Me)
     End Sub
 
+    Public Sub ScooterRented(c As Client, beginDate As DateTime, endDate As DateTime)
+        Me._daoScooter.ScooterRented(c, beginDate, endDate)
+    End Sub
+
+    Public Sub CreateRental(b As Booking)
+        Me._daoScooter.CreateRental(Me, b)
+    End Sub
 End Class

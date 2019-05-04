@@ -22,11 +22,12 @@
     End Sub
 
     Public Function Insert(b As Booking) As Integer
-        Return DBBroker.GetBroker.Change("INSERT INTO BOOKING VALUES('" & b.BookingId & "','" & b.BeginTime & "','" & b.EndTime & "','" & b.Client & "','" & b.BookingDate & "','" & b.TotalPrice & "');")
+        Return DBBroker.GetBroker.Change("INSERT INTO BOOKINGS(BeginTime, EndTime, Client, BookingDate, TotalPrice)
+                                          VALUES(#" & b.BeginTime.ToShortTimeString & "# , #" & b.EndTime.ToShortTimeString & "# , '" & b.Client & "', #" & b.BookingDate & "#," & b.TotalPrice & ");")
     End Function
 
     Public Sub Read(b As Booking)
-        Me._dbReader = DBBroker.GetBroker.Read("SELECT * FROM CLIENTS WHERE BookingID = '" & b.BookingId & "';")
+        Me._dbReader = DBBroker.GetBroker.Read("SELECT * FROM BOOKINGS WHERE Client = '" & b.Client & "';")
 
         While Me._dbReader.Read
             b.BookingId = Convert.ToString(Me._dbReader(0))
@@ -39,7 +40,7 @@
     End Sub
 
     Public Sub ReadAll()
-        Me._dbReader = DBBroker.GetBroker.Read("SELECT * FROM CLIENTS ORDER BY BookingID;")
+        Me._dbReader = DBBroker.GetBroker.Read("SELECT * FROM BOOKINGS ORDER BY BookingID;")
         Dim aux As Booking
 
         While Me._dbReader.Read
@@ -48,11 +49,18 @@
         End While
     End Sub
 
-    Public Function Update(b As Booking)
-        Return DBBroker.GetBroker.Change("UPDATE BOOKING SET BeginTime = '" & b.BeginTime & "', EndTime = '" & b.EndTime & "', Client = '" & b.Client & "', BookingDate = '" & b.BookingDate & "', TotalPrice = '" & b.TotalPrice & "' WHERE BookingID = '" & b.BookingId & "';")
-    End Function
+    Public Sub FreeScooters(b As Booking, beginTime As DateTime, endTime As DateTime, bookDate As DateTime)
+        Me._dbReader = DBBroker.GetBroker.Read("SELECT ScooterID FROM SCOOTERS WHERE ScooterID NOT IN(SELECT Scooter FROM RENTALS WHERE Booking IN(SELECT BookingID FROM BOOKINGS WHERE BookingDate = # " & bookDate.Date & "#
+                                                                                                                                                   AND BeginTime BETWEEN #" & beginTime.Date & "# AND #" & endTime.Date & "#));")
+        While Me._dbReader.Read()
+            b.ScooterList.Add(_dbReader(0))
+        End While
+    End Sub
 
-    Public Function Delete(b As Booking)
-        Return DBBroker.GetBroker.Change("DELETE FROM CLIENTS WHERE BookingID = '" & b.BookingId & "';")
-    End Function
+    Public Sub HistoryScooters(b As Booking, beginTime As DateTime, endTime As DateTime)
+        Me._dbReader = DBBroker.GetBroker.Read("SELECT ScooterID FROM SCOOTERS WHERE ScooterID IN(SELECT Scooter FROM RENTALS WHERE Booking IN(SELECT BookingID FROM BOOKINGS WHERE BookingDate BETWEEN #" & beginTime.Date & "# AND #" & endTime.Date & "#));")
+        While Me._dbReader.Read()
+            b.ScooterList.Add(_dbReader(0))
+        End While
+    End Sub
 End Class

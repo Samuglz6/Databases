@@ -92,4 +92,12 @@
     Public Sub Delete()
         Me._daoClient.Delete(Me)
     End Sub
+
+    Public Sub ClientsRentedScooter(s As Scooter, beginDate As DateTime, endDate As DateTime)
+        Me._daoClient.ClientsRentedScooter(s, beginDate, endDate)
+    End Sub
+
+    Public Sub ClientsHistory(beginDate As DateTime, endDate As DateTime)
+        Me._daoClient.ClientsHistory(beginDate, endDate)
+    End Sub
 End Class

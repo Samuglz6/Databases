@@ -4,19 +4,11 @@
     Private _endTime As DateTime
     Private _client As String
     Private _bookingDate As DateTime
-    Private _totalPrice As DateTime
+    Private _totalPrice As Integer
     Private _daoBooking As BookingDAO
+    Private _scooterList As Collection = New Collection
 
-    Public Property BookingId() As String
-        Get
-            Return Me._client
-        End Get
-        Set(value As String)
-            Me._client = value
-        End Set
-    End Property
-
-    Public Property Client() As Integer
+    Public Property BookingId() As Integer
         Get
             Return Me._bookingId
         End Get
@@ -25,6 +17,23 @@
         End Set
     End Property
 
+    Public Property Client() As String
+        Get
+            Return Me._client
+        End Get
+        Set(value As String)
+            Me._client = value
+        End Set
+    End Property
+
+    Public Property ScooterList() As Collection
+        Get
+            Return Me._scooterList
+        End Get
+        Set(value As Collection)
+            Me._scooterList = value
+        End Set
+    End Property
 
     Public Property BeginTime() As DateTime
         Get
@@ -35,11 +44,11 @@
         End Set
     End Property
 
-    Public Property TotalPrice() As DateTime
+    Public Property TotalPrice() As Integer
         Get
             Return Me._totalPrice
         End Get
-        Set(value As DateTime)
+        Set(value As Integer)
             Me._totalPrice = value
         End Set
     End Property
@@ -66,7 +75,16 @@
         Me._daoBooking = New BookingDAO
     End Sub
 
-    Public Sub New(bookingId As Integer, beginTime As DateTime, endTime As DateTime, client As String, bookingDate As DateTime, totalPrice As DateTime)
+    Public Sub New(beginTime As DateTime, endTime As DateTime, client As String, bookingDate As DateTime, totalPrice As Integer)
+        Me._beginTime = beginTime
+        Me._endTime = endTime
+        Me._client = client
+        Me._bookingDate = bookingDate
+        Me._totalPrice = totalPrice
+        Me._daoBooking = New BookingDAO
+    End Sub
+
+    Public Sub New(bookingId As Integer, beginTime As DateTime, endTime As DateTime, client As String, bookingDate As DateTime, totalPrice As Integer)
         Me._bookingId = bookingId
         Me._beginTime = beginTime
         Me._endTime = endTime
@@ -88,11 +106,11 @@
         Me._daoBooking.ReadAll()
     End Sub
 
-    Public Sub Update()
-        Me._daoBooking.Update(Me)
+    Public Sub FreeScooters(beginTime As DateTime, endTime As DateTime, bookDate As DateTime)
+        Me._daoBooking.FreeScooters(Me, beginTime, endTime, bookDate)
     End Sub
 
-    Public Sub Delete()
-        Me._daoBooking.Delete(Me)
+    Public Sub HistoryScooters(beginTime As DateTime, endTime As DateTime)
+        Me._daoBooking.HistoryScooters(Me, beginTime, endTime)
     End Sub
 End Class

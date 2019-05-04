@@ -102,14 +102,14 @@
         If (form.Text = "Clients" Or form.Text = "Scooters" Or form.Text = "ScooterTypes") Then
             For Each control In form.Controls
                 If TypeOf control Is TextBox Then
-                    If control.Name Like "clientAddress_textbox" Or control.Name Like "scooterDescription_textbox" Then
+                    If control.Name Like "clientAddress_textbox" Then
                         Return False
                     ElseIf control.Text Like Nothing Then
                         Return True
                     End If
                 ElseIf TypeOf control Is RichTextBox Then
                     If control.Text Like Nothing Then
-                        Return True
+                        Return False
                     End If
                 End If
             Next control

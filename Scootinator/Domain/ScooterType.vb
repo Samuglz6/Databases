@@ -92,4 +92,8 @@
     Public Sub Delete()
         Me._daoScooterType.Delete(Me)
     End Sub
+
+    Public Sub Ranking(beginDate As DateTime, endDate As DateTime)
+        Me._daoScooterType.Ranking(beginDate, endDate)
+    End Sub
 End Class

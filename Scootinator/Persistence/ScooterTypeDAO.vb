@@ -53,4 +53,15 @@
     Public Function Delete(st As ScooterType)
         Return DBBroker.GetBroker.Change("DELETE FROM SCOOT_TYPE WHERE TypeID = " & st.TypeID & ";")
     End Function
+
+    Public Sub Ranking(beginDate As DateTime, endDate As DateTime)
+        Me._dbReader = DBBroker.GetBroker.Read("SELECT st.TypeID, SUM(b.TotalPrice) AS 'income'
+                                                FROM SCOOT_TYPE st, SCOOTERS s, RENTALS r, BOOKINGS b 
+                                                WHERE b.BookingID = r.Booking AND s.ScooterID = r.Scooter AND s.Type = st.TypeID AND b.BookingDate BETWEEN #" & beginDate.Date & "# AND #" & endDate.Date & "#
+                                                GROUP BY st.TypeID
+                                                ORDER BY 'income';")
+        While Me._dbReader.Read
+            Me._scooterTypeList.Add(_dbReader(0))
+        End While
+    End Sub
 End Class

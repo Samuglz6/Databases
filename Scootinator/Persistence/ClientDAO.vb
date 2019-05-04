@@ -54,4 +54,30 @@
     Public Function Delete(c As Client)
         Return DBBroker.GetBroker.Change("DELETE FROM CLIENTS WHERE ClientId = '" & c.ClientId & "';")
     End Function
+
+    Public Sub ClientsRentedScooter(s As Scooter, beginDate As DateTime, endDate As DateTime)
+        Dim aux As Client = New Client
+        Me._dbReader = DBBroker.GetBroker.Read("SELECT c.ClientID 
+                                                FROM CLIENTS c, RENTALS r, BOOKINGS b, SCOOTERS s 
+                                                WHERE c.ClientID = b.Client AND b.BookingID = r.Booking AND s.ScooterID = r.Scooter AND s.ScooterID = " & s.ScooterId & "
+                                                AND (b.BookingDate BETWEEN #" & beginDate.Date & "# AND #" & endDate.Date & "#)
+                                                GROUP BY c.ClientID;")
+        While Me._dbReader.Read
+            aux.ClientId = Me._dbReader(0)
+            Me._clientList.Add(aux)
+        End While
+    End Sub
+
+    Public Sub ClientsHistory(beginDate As DateTime, endDate As DateTime)
+        Dim aux As Client = New Client
+        Me._dbReader = DBBroker.GetBroker.Read("SELECT c.ClientID 
+                                                FROM CLIENTS c, BOOKINGS b
+                                                WHERE c.ClientID = b.Client 
+                                                AND b.BookingDate BETWEEN #" & beginDate.Date & "# AND #" & endDate.Date & "#
+                                                GROUP BY ClientID;")
+        While Me._dbReader.Read
+            aux.ClientId = Me._dbReader(0)
+            Me._clientList.Add(aux)
+        End While
+    End Sub
 End Class
