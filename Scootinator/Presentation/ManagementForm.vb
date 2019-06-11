@@ -162,8 +162,8 @@
             MessageBox.Show("ID must contains 8 numbers followed by a letter from A to Z.")
         ElseIf clientPhone_textbox.Text.Length <> 9 Then
             MessageBox.Show("Telephon number must cointain 9 digits.")
-        ElseIf clientID_textbox.Text Like "########[A-Z]" Then
-            client = New Client(clientID_textbox.Text, clientName_textbox.Text, clientPhone_textbox.Text, clientAddress_textbox.Text, clientEmail_textbox.Text)
+        ElseIf clientID_textbox.Text.ToUpper Like "########[A-Z]" Then
+            client = New Client(clientID_textbox.Text.ToUpper, clientName_textbox.Text, clientPhone_textbox.Text, clientAddress_textbox.Text, clientEmail_textbox.Text)
             Try
                 client.Insert()
                 clients_listbox.Items.Add(client.ClientId)
@@ -180,8 +180,8 @@
 
         If clientID_textbox.Text Like "" Then
             MessageBox.Show("At least ID field has to be filled in order to delete a client.")
-        ElseIf clientID_textbox.Text Like "########[A-Z]" Then
-            client.ClientId = clientID_textbox.Text
+        ElseIf clientID_textbox.Text.ToUpper Like "########[A-Z]" Then
+            client.ClientId = clientID_textbox.Text.ToUpper
 
             Try
                 client.Delete()
