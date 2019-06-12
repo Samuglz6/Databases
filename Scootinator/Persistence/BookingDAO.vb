@@ -50,8 +50,8 @@
     End Sub
 
     Public Sub FreeScooters(b As Booking, beginTime As DateTime, endTime As DateTime, bookDate As DateTime)
-        Me._dbReader = DBBroker.GetBroker.Read("SELECT ScooterID FROM SCOOTERS WHERE ScooterID NOT IN(SELECT Scooter FROM RENTALS WHERE Booking IN(SELECT BookingID FROM BOOKINGS WHERE BookingDate = # " & bookDate.Date & "#
-                                                                                                                                                   AND BeginTime BETWEEN #" & beginTime.Date & "# AND #" & endTime.Date & "#));")
+        Me._dbReader = DBBroker.GetBroker.Read("")
+
         While Me._dbReader.Read()
             b.ScooterList.Add(_dbReader(0))
         End While

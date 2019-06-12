@@ -221,7 +221,7 @@
             MessageBox.Show("Beginning hour cannot be equals or above the ending hour.")
         Else
             Try
-                aux.FreeScooters(begin_dateTime.Value, end_dateTime.Value, DateTimePicker1.Value)
+                aux.FreeScooters(begin_dateTime.Value.ToShortTimeString, end_dateTime.Value.ToShortTimeString, DateTimePicker1.Value)
 
                 scooter_available_listbox.Enabled = True
                 scooter_renting_listbox.Enabled = True
