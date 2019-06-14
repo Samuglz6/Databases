@@ -166,7 +166,7 @@
         If scooter_renting_listbox.Items.Count = 0 Then
             MessageBox.Show("In order to book scooters, at least one scooter has to be rented.")
         Else
-            booking = New Booking(begin_dateTime.Value, end_dateTime.Value, client_id.Text, DateTimePicker1.Value, Convert.ToInt32(total_price.Text))
+            booking = New Booking(begin_dateTime.Value.ToShortTimeString, end_dateTime.Value.ToShortTimeString, client_id.Text, DateTimePicker1.Value, Convert.ToInt32(total_price.Text))
 
             Try
                 booking.Insert()

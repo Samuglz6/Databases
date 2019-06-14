@@ -23,7 +23,7 @@
 
     Public Function Insert(b As Booking) As Integer
         Return DBBroker.GetBroker.Change("INSERT INTO BOOKINGS(BeginTime, EndTime, Client, BookingDate, TotalPrice)
-                                          VALUES(#" & b.BeginTime.ToShortTimeString & "# , #" & b.EndTime.ToShortTimeString & "# , '" & b.Client & "', #" & b.BookingDate & "#," & b.TotalPrice & ");")
+                                          VALUES(#" & b.BeginTime & "# , #" & b.EndTime & "# , '" & b.Client & "', #" & b.BookingDate.Date & "#," & b.TotalPrice & ");")
     End Function
 
     Public Sub Read(b As Booking)
@@ -68,7 +68,13 @@
     End Sub
 
     Public Sub HistoryScooters(b As Booking, beginTime As DateTime, endTime As DateTime)
-        Me._dbReader = DBBroker.GetBroker.Read("SELECT ScooterID FROM SCOOTERS WHERE ScooterID IN(SELECT Scooter FROM RENTALS WHERE Booking IN(SELECT BookingID FROM BOOKINGS WHERE BookingDate BETWEEN #" & beginTime.Date & "# AND #" & endTime.Date & "#));")
+        Me._dbReader = DBBroker.GetBroker.Read("SELECT ScooterID 
+                                                FROM SCOOTERS 
+                                                WHERE ScooterID IN(SELECT Scooter 
+                                                                   FROM RENTALS 
+                                                                   WHERE Booking IN(SELECT BookingID 
+                                                                                    FROM BOOKINGS 
+                                                                                    WHERE BookingDate BETWEEN #" & beginTime.Date & "# AND #" & endTime.Date & "#));")
         While Me._dbReader.Read()
             b.ScooterList.Add(_dbReader(0))
         End While
