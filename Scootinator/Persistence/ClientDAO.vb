@@ -56,28 +56,30 @@
     End Function
 
     Public Sub ClientsRentedScooter(s As Scooter, beginDate As DateTime, endDate As DateTime)
-        Dim aux As Client = New Client
-        Me._dbReader = DBBroker.GetBroker.Read("SELECT c.ClientID 
-                                                FROM CLIENTS c, RENTALS r, BOOKINGS b, SCOOTERS s 
-                                                WHERE c.ClientID = b.Client AND b.BookingID = r.Booking AND s.ScooterID = r.Scooter AND s.ScooterID = " & s.ScooterId & "
-                                                AND (b.BookingDate BETWEEN #" & beginDate.Date & "# AND #" & endDate.Date & "#)
-                                                GROUP BY c.ClientID;")
+        Dim aux As Client
+        Me._dbReader = DBBroker.GetBroker.Read("SELECT Client
+                                                FROM RENTALS, BOOKINGS
+                                                WHERE BookingID = Booking 
+                                                AND Scooter = " & s.ScooterId & "
+                                                AND (BookingDate BETWEEN #" & beginDate.Date & "# 
+                                                     AND #" & endDate.Date & "#)
+                                                GROUP BY Client;")
         While Me._dbReader.Read
-            aux.ClientId = Me._dbReader(0)
+            aux = New Client With {.ClientId = Me._dbReader(0)}
             Me._clientList.Add(aux)
         End While
     End Sub
 
     Public Sub ClientsHistory(beginDate As DateTime, endDate As DateTime)
-        Dim aux As Client = New Client
-        Me._dbReader = DBBroker.GetBroker.Read("SELECT c.ClientID 
-                                                FROM CLIENTS c, BOOKINGS b
-                                                WHERE c.ClientID = b.Client 
-                                                AND b.BookingDate BETWEEN #" & beginDate.Date & "# AND #" & endDate.Date & "#
-                                                GROUP BY ClientID;")
+        Dim aux As Client
+        Me._dbReader = DBBroker.GetBroker.Read("SELECT Client 
+                                                FROM BOOKINGS
+                                                WHERE BookingDate BETWEEN #" & beginDate.Date & "# AND #" & endDate.Date & "#
+                                                GROUP BY Client;")
         While Me._dbReader.Read
-            aux.ClientId = Me._dbReader(0)
+            aux = New Client With {.ClientId = Me._dbReader(0)}
             Me._clientList.Add(aux)
         End While
+
     End Sub
 End Class

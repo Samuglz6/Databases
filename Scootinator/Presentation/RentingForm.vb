@@ -45,7 +45,7 @@
         rent_button.Enabled = False
     End Sub
 
-    Private Sub DateTimePicker3_ValueChanged(sender As Object, e As EventArgs) Handles begin_dateTime.ValueChanged
+    Private Sub Begin_dateTime_ValueChanged(sender As Object, e As EventArgs) Handles begin_dateTime.ValueChanged
         scooter_available_listbox.Enabled = False
         scooter_renting_listbox.Enabled = False
         add_scooter.Enabled = False
@@ -53,12 +53,12 @@
         rent_button.Enabled = False
     End Sub
 
-    Private Sub DateTimePicker2_ValueChanged(sender As Object, e As EventArgs) Handles end_dateTime.ValueChanged
-        scooter_available_listbox.Enabled = True
-        scooter_renting_listbox.Enabled = True
-        add_scooter.Enabled = True
+    Private Sub End_dateTime_ValueChanged(sender As Object, e As EventArgs) Handles end_dateTime.ValueChanged
+        scooter_available_listbox.Enabled = False
+        scooter_renting_listbox.Enabled = False
+        add_scooter.Enabled = False
         remove_scooter.Enabled = True
-        rent_button.Enabled = True
+        rent_button.Enabled = False
     End Sub
 
     Private Sub Scooter_available_listbox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles scooter_available_listbox.SelectedIndexChanged
@@ -113,6 +113,8 @@
         Dim scooter As Scooter = New Scooter With {.ScooterId = Convert.ToInt32(scooter_available_listbox.SelectedItem)}
         Dim scooterType As ScooterType
 
+        FreeScootersInfo()
+
         If scooter_available_listbox.SelectedIndex <> -1 Then
             Try
                 scooter.Read()
@@ -137,6 +139,8 @@
     Private Sub Remove_scooter_Click(sender As Object, e As EventArgs) Handles remove_scooter.Click
         Dim scooter As Scooter = New Scooter With {.ScooterId = Convert.ToInt32(scooter_renting_listbox.SelectedItem)}
         Dim scooterType As ScooterType
+
+        FreeScootersInfo()
 
         If scooter_renting_listbox.SelectedIndex <> -1 Then
             Try
@@ -184,10 +188,7 @@
 
             scooter_available_listbox.Items.Clear()
             scooter_renting_listbox.Items.Clear()
-            scooter_brand.Text = Nothing
-            scooter_price.Text = Nothing
-            scooter_speed.Text = Nothing
-            scooter_weight.Text = Nothing
+            FreeScootersInfo()
             total_price.Text = 0
             scooter_available_listbox.Enabled = False
             scooter_renting_listbox.Enabled = False
@@ -211,13 +212,22 @@
         End If
     End Sub
 
+    Private Sub FreeScootersInfo()
+        scooter_brand.Text = Nothing
+        scooter_price.Text = Nothing
+        scooter_speed.Text = Nothing
+        scooter_weight.Text = Nothing
+    End Sub
+
     Private Sub Check_scooters_Click(sender As Object, e As EventArgs) Handles check_scooters_button.Click
         Dim aux As Booking = New Booking
 
         scooter_available_listbox.Items.Clear()
         scooter_renting_listbox.Items.Clear()
+        total_price.Text = 0
+        FreeScootersInfo()
 
-        If begin_dateTime.Value <= tab_endDate.Value Then
+        If begin_dateTime.Value.Hour >= end_dateTime.Value.Hour Then
             MessageBox.Show("Beginning hour cannot be equals or above the ending hour.")
         Else
             Try
@@ -239,45 +249,48 @@
         End If
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If tab_panel.SelectedTab.Text Like "Clients" Then
-            tab_clients_listbox.Items.Clear()
-            Dim client As Client = New Client
-            Try
-                client.ClientsHistory(tab_beginDate.Value, tab_endDate.Value)
+    Private Sub CheckHistory_button_Click(sender As Object, e As EventArgs) Handles checkHistory_button.Click
+        If history_beginDate.Value.Date > history_endDate.Value.Date Then
+            MessageBox.Show("Ending Date can't be before the Beginning Date.")
+        Else
+            If tab_panel.SelectedTab.Text Like "Clients" Then
+                tab_clients_listbox.Items.Clear()
+                Dim client As ClientDAO = New ClientDAO
+                Try
+                    client.ClientsHistory(history_beginDate.Value, history_endDate.Value)
 
-                For Each aux In client.ClientDAO.ClientList
-                    tab_clients_listbox.Items.Add(aux.ClientID)
+                    For Each aux In client.ClientList
+                        tab_clients_listbox.Items.Add(aux.ClientID)
+                    Next
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message, ex.Source)
+                End Try
+            ElseIf tab_panel.SelectedTab.Text Like "Scooters" Then
+                Dim aux As Booking = New Booking
+                tab_scooters_listbox.Items.Clear()
+                Try
+                    aux.HistoryScooters(history_beginDate.Value, history_endDate.Value)
+
+                    For Each scooter In aux.ScooterList
+                        tab_scooters_listbox.Items.Add(scooter)
+                    Next
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message, ex.Source)
+                End Try
+            ElseIf tab_panel.SelectedTab.Text Like "Ranking" Then
+                Dim aux As ScooterType = New ScooterType
+
+                Try
+                    aux.Ranking(history_beginDate.Value, history_endDate.Value)
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message, ex.Source)
+                End Try
+
+                For Each scooterType In aux.ScooterTypeDAO.ScooterTypeList
+                    ranking_listbox.Items.Add(scooterType)
                 Next
-            Catch ex As Exception
-                MessageBox.Show(ex.Message, ex.Source)
-            End Try
-        ElseIf tab_panel.SelectedTab.Text Like "Scooters" Then
-            Dim aux As Booking = New Booking
-            tab_scooters_listbox.Items.Clear()
-            Try
-                aux.HistoryScooters(tab_beginDate.Value, tab_endDate.Value)
 
-                For Each scooter In aux.ScooterList
-                    tab_scooters_listbox.Items.Add(scooter)
-                Next
-            Catch ex As Exception
-                MessageBox.Show(ex.Message, ex.Source)
-            End Try
-        ElseIf tab_panel.SelectedTab.Text Like "Ranking" Then
-            Dim aux As ScooterType = New ScooterType
-
-            Try
-                aux.Ranking(tab_beginDate.Value, tab_endDate.Value)
-            Catch ex As Exception
-                MessageBox.Show(ex.Message, ex.Source)
-            End Try
-
-            For Each scooterType In aux.ScooterTypeDAO.ScooterTypeList
-                ranking_listbox.Items.Add(scooterType)
-            Next
-
-
+            End If
         End If
     End Sub
 
@@ -286,7 +299,7 @@
         Dim scooterType As ScooterType
         Dim client As Client = New Client
 
-        ListBox2.Items.Clear()
+        scooterHistory_clients.Items.Clear()
         Label27.Text = Nothing
         Label28.Text = Nothing
 
@@ -309,10 +322,10 @@
             End Try
 
             Try
-                client.ClientsRentedScooter(scooter, tab_beginDate.Value, tab_endDate.Value)
+                client.ClientsRentedScooter(scooter, history_beginDate.Value, history_endDate.Value)
 
                 For Each aux In client.ClientDAO.ClientList
-                    ListBox2.Items.Add(aux.ClientID)
+                    scooterHistory_clients.Items.Add(aux.ClientID)
                 Next
             Catch ex As Exception
                 MessageBox.Show(ex.Message, ex.Source)
@@ -324,10 +337,10 @@
 
     End Sub
 
-    Private Sub ListBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox2.SelectedIndexChanged
-        Dim client As Client = New Client With {.ClientId = ListBox2.SelectedItem}
+    Private Sub ScooterHistory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles scooterHistory_clients.SelectedIndexChanged
+        Dim client As Client = New Client With {.ClientId = scooterHistory_clients.SelectedItem}
 
-        If ListBox2.SelectedIndex <> -1 Then
+        If scooterHistory_clients.SelectedIndex <> -1 Then
             Try
                 client.Read()
 
@@ -339,11 +352,11 @@
         End If
     End Sub
 
-    Private Sub tab_clients_listbox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tab_clients_listbox.SelectedIndexChanged
+    Private Sub Tab_clients_listbox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tab_clients_listbox.SelectedIndexChanged
         Dim client As Client = New Client With {.ClientId = tab_clients_listbox.SelectedItem}
-        Dim scooter As Scooter = New Scooter
+        Dim scooter As ScooterDAO = New ScooterDAO
 
-        ListBox3.Items.Clear()
+        clientHistory_rentedScooters.Items.Clear()
         Label24.Text = Nothing
         Label25.Text = Nothing
         RichTextBox2.Text = Nothing
@@ -362,10 +375,10 @@
             End Try
 
             Try
-                scooter.ScooterRented(client, tab_beginDate.Value, tab_endDate.Value)
+                scooter.ScooterRented(client, history_beginDate.Value, history_endDate.Value)
 
-                For Each aux In scooter.ScooterDAO.ScooterList
-                    ListBox3.Items.Add(aux.scooterId)
+                For Each aux In scooter.ScooterList
+                    clientHistory_rentedScooters.Items.Add(aux.scooterId)
                 Next
             Catch ex As Exception
 
@@ -373,10 +386,10 @@
         End If
     End Sub
 
-    Private Sub ListBox3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox3.SelectedIndexChanged
-        Dim scooter As Scooter = New Scooter With {.ScooterId = ListBox3.SelectedItem}
+    Private Sub ClientHistory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles clientHistory_rentedScooters.SelectedIndexChanged
+        Dim scooter As Scooter = New Scooter With {.ScooterId = clientHistory_rentedScooters.SelectedItem}
 
-        If ListBox3.SelectedIndex <> -1 Then
+        If clientHistory_rentedScooters.SelectedIndex <> -1 Then
             Try
                 scooter.Read()
 

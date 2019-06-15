@@ -53,14 +53,17 @@
     End Function
 
     Public Sub ScooterRented(c As Client, beginDate As DateTime, endDate As DateTime)
-        Dim aux As Scooter = New Scooter
-        Me._dbReader = DBBroker.GetBroker.Read("SELECT s.ScooterID
-                                                FROM CLIENTS c, RENTALS r, BOOKINGS b, SCOOTERS s 
-                                                WHERE c.ClientID = b.Client AND b.BookingID = r.Booking AND s.ScooterID = r.Scooter AND s.ScooterID = " & c.ClientId & "
-                                                AND (b.BookingDate BETWEEN #" & beginDate.Date & "# AND #" & endDate.Date & "#)
-                                                GROUP BY s.ScooterID;")
+        Dim aux As Scooter
+
+        Me._dbReader = DBBroker.GetBroker.Read("SELECT Scooter
+                                                FROM RENTALS, BOOKINGS
+                                                WHERE BookingID = Booking 
+                                                AND Client = '" & c.ClientId & "'
+                                                AND (BookingDate BETWEEN #" & beginDate.Date & "# AND #" & endDate.Date & "#)
+                                                GROUP BY Scooter;")
+
         While Me._dbReader.Read
-            aux.ScooterId = Me._dbReader(0)
+            aux = New Scooter With {.ScooterId = Me._dbReader(0)}
             Me._scooterList.Add(aux)
         End While
     End Sub

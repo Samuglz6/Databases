@@ -59,10 +59,10 @@ Partial Class RentingForm
         Me.clients_listbox = New System.Windows.Forms.ListBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Label31 = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.tab_beginDate = New System.Windows.Forms.DateTimePicker()
+        Me.checkHistory_button = New System.Windows.Forms.Button()
+        Me.history_beginDate = New System.Windows.Forms.DateTimePicker()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.tab_endDate = New System.Windows.Forms.DateTimePicker()
+        Me.history_endDate = New System.Windows.Forms.DateTimePicker()
         Me.tab_panel = New System.Windows.Forms.TabControl()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Label25 = New System.Windows.Forms.Label()
@@ -83,7 +83,7 @@ Partial Class RentingForm
         Me.Label47 = New System.Windows.Forms.Label()
         Me.Label48 = New System.Windows.Forms.Label()
         Me.Label49 = New System.Windows.Forms.Label()
-        Me.ListBox3 = New System.Windows.Forms.ListBox()
+        Me.clientHistory_rentedScooters = New System.Windows.Forms.ListBox()
         Me.tab_clients_listbox = New System.Windows.Forms.ListBox()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.tab_scooterPrice = New System.Windows.Forms.Label()
@@ -104,7 +104,7 @@ Partial Class RentingForm
         Me.Label28 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
-        Me.ListBox2 = New System.Windows.Forms.ListBox()
+        Me.scooterHistory_clients = New System.Windows.Forms.ListBox()
         Me.tab_scooters_listbox = New System.Windows.Forms.ListBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.Label64 = New System.Windows.Forms.Label()
@@ -307,7 +307,7 @@ Partial Class RentingForm
         '
         'begin_dateTime
         '
-        Me.begin_dateTime.CustomFormat = "HH:mm"
+        Me.begin_dateTime.CustomFormat = "HH:00"
         Me.begin_dateTime.Enabled = False
         Me.begin_dateTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.begin_dateTime.Location = New System.Drawing.Point(151, 308)
@@ -325,11 +325,13 @@ Partial Class RentingForm
         Me.end_dateTime.Enabled = False
         Me.end_dateTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.end_dateTime.Location = New System.Drawing.Point(151, 335)
+        Me.end_dateTime.MaxDate = New Date(2019, 4, 28, 22, 0, 0, 0)
+        Me.end_dateTime.MinDate = New Date(2019, 4, 28, 9, 0, 0, 0)
         Me.end_dateTime.Name = "end_dateTime"
         Me.end_dateTime.ShowUpDown = True
         Me.end_dateTime.Size = New System.Drawing.Size(72, 21)
         Me.end_dateTime.TabIndex = 19
-        Me.end_dateTime.Value = New Date(2019, 4, 27, 18, 0, 0, 0)
+        Me.end_dateTime.Value = New Date(2019, 4, 28, 9, 0, 0, 0)
         '
         'Label11
         '
@@ -350,6 +352,7 @@ Partial Class RentingForm
         Me.DateTimePicker1.Name = "DateTimePicker1"
         Me.DateTimePicker1.Size = New System.Drawing.Size(116, 21)
         Me.DateTimePicker1.TabIndex = 16
+        Me.DateTimePicker1.Value = New Date(2019, 6, 15, 12, 8, 51, 0)
         '
         'client_id
         '
@@ -491,10 +494,10 @@ Partial Class RentingForm
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.Label31)
-        Me.GroupBox2.Controls.Add(Me.Button1)
-        Me.GroupBox2.Controls.Add(Me.tab_beginDate)
+        Me.GroupBox2.Controls.Add(Me.checkHistory_button)
+        Me.GroupBox2.Controls.Add(Me.history_beginDate)
         Me.GroupBox2.Controls.Add(Me.Label18)
-        Me.GroupBox2.Controls.Add(Me.tab_endDate)
+        Me.GroupBox2.Controls.Add(Me.history_endDate)
         Me.GroupBox2.Controls.Add(Me.tab_panel)
         Me.GroupBox2.Controls.Add(Me.Label13)
         Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -514,23 +517,23 @@ Partial Class RentingForm
         Me.Label31.TabIndex = 13
         Me.Label31.Text = "Check the data between two dates:"
         '
-        'Button1
+        'checkHistory_button
         '
-        Me.Button1.Location = New System.Drawing.Point(284, 73)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(87, 48)
-        Me.Button1.TabIndex = 4
-        Me.Button1.Text = "Check History"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.checkHistory_button.Location = New System.Drawing.Point(284, 73)
+        Me.checkHistory_button.Name = "checkHistory_button"
+        Me.checkHistory_button.Size = New System.Drawing.Size(87, 48)
+        Me.checkHistory_button.TabIndex = 4
+        Me.checkHistory_button.Text = "Check History"
+        Me.checkHistory_button.UseVisualStyleBackColor = True
         '
-        'tab_beginDate
+        'history_beginDate
         '
-        Me.tab_beginDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.tab_beginDate.Location = New System.Drawing.Point(154, 72)
-        Me.tab_beginDate.Name = "tab_beginDate"
-        Me.tab_beginDate.Size = New System.Drawing.Size(98, 21)
-        Me.tab_beginDate.TabIndex = 1
-        Me.tab_beginDate.Value = New Date(2019, 4, 28, 0, 0, 0, 0)
+        Me.history_beginDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.history_beginDate.Location = New System.Drawing.Point(154, 72)
+        Me.history_beginDate.Name = "history_beginDate"
+        Me.history_beginDate.Size = New System.Drawing.Size(98, 21)
+        Me.history_beginDate.TabIndex = 1
+        Me.history_beginDate.Value = New Date(2019, 6, 15, 0, 0, 0, 0)
         '
         'Label18
         '
@@ -541,14 +544,14 @@ Partial Class RentingForm
         Me.Label18.TabIndex = 3
         Me.Label18.Text = "Ending Date:"
         '
-        'tab_endDate
+        'history_endDate
         '
-        Me.tab_endDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.tab_endDate.Location = New System.Drawing.Point(154, 104)
-        Me.tab_endDate.Name = "tab_endDate"
-        Me.tab_endDate.Size = New System.Drawing.Size(99, 21)
-        Me.tab_endDate.TabIndex = 0
-        Me.tab_endDate.Value = New Date(2019, 4, 28, 0, 0, 0, 0)
+        Me.history_endDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.history_endDate.Location = New System.Drawing.Point(154, 104)
+        Me.history_endDate.Name = "history_endDate"
+        Me.history_endDate.Size = New System.Drawing.Size(99, 21)
+        Me.history_endDate.TabIndex = 0
+        Me.history_endDate.Value = New Date(2019, 6, 15, 0, 0, 0, 0)
         '
         'tab_panel
         '
@@ -581,7 +584,7 @@ Partial Class RentingForm
         Me.TabPage3.Controls.Add(Me.Label47)
         Me.TabPage3.Controls.Add(Me.Label48)
         Me.TabPage3.Controls.Add(Me.Label49)
-        Me.TabPage3.Controls.Add(Me.ListBox3)
+        Me.TabPage3.Controls.Add(Me.clientHistory_rentedScooters)
         Me.TabPage3.Controls.Add(Me.tab_clients_listbox)
         Me.TabPage3.Location = New System.Drawing.Point(4, 24)
         Me.TabPage3.Name = "TabPage3"
@@ -746,14 +749,14 @@ Partial Class RentingForm
         Me.Label49.TabIndex = 2
         Me.Label49.Text = "ID:"
         '
-        'ListBox3
+        'clientHistory_rentedScooters
         '
-        Me.ListBox3.FormattingEnabled = True
-        Me.ListBox3.ItemHeight = 15
-        Me.ListBox3.Location = New System.Drawing.Point(19, 243)
-        Me.ListBox3.Name = "ListBox3"
-        Me.ListBox3.Size = New System.Drawing.Size(120, 169)
-        Me.ListBox3.TabIndex = 1
+        Me.clientHistory_rentedScooters.FormattingEnabled = True
+        Me.clientHistory_rentedScooters.ItemHeight = 15
+        Me.clientHistory_rentedScooters.Location = New System.Drawing.Point(19, 243)
+        Me.clientHistory_rentedScooters.Name = "clientHistory_rentedScooters"
+        Me.clientHistory_rentedScooters.Size = New System.Drawing.Size(120, 169)
+        Me.clientHistory_rentedScooters.TabIndex = 1
         '
         'tab_clients_listbox
         '
@@ -784,7 +787,7 @@ Partial Class RentingForm
         Me.TabPage1.Controls.Add(Me.Label28)
         Me.TabPage1.Controls.Add(Me.Label20)
         Me.TabPage1.Controls.Add(Me.Label19)
-        Me.TabPage1.Controls.Add(Me.ListBox2)
+        Me.TabPage1.Controls.Add(Me.scooterHistory_clients)
         Me.TabPage1.Controls.Add(Me.tab_scooters_listbox)
         Me.TabPage1.Location = New System.Drawing.Point(4, 24)
         Me.TabPage1.Name = "TabPage1"
@@ -949,14 +952,14 @@ Partial Class RentingForm
         Me.Label19.TabIndex = 2
         Me.Label19.Text = "ID:"
         '
-        'ListBox2
+        'scooterHistory_clients
         '
-        Me.ListBox2.FormattingEnabled = True
-        Me.ListBox2.ItemHeight = 15
-        Me.ListBox2.Location = New System.Drawing.Point(19, 280)
-        Me.ListBox2.Name = "ListBox2"
-        Me.ListBox2.Size = New System.Drawing.Size(120, 139)
-        Me.ListBox2.TabIndex = 1
+        Me.scooterHistory_clients.FormattingEnabled = True
+        Me.scooterHistory_clients.ItemHeight = 15
+        Me.scooterHistory_clients.Location = New System.Drawing.Point(19, 280)
+        Me.scooterHistory_clients.Name = "scooterHistory_clients"
+        Me.scooterHistory_clients.Size = New System.Drawing.Size(120, 139)
+        Me.scooterHistory_clients.TabIndex = 1
         '
         'tab_scooters_listbox
         '
@@ -1170,10 +1173,10 @@ Partial Class RentingForm
     Friend WithEvents Label5 As Label
     Friend WithEvents check_scooters_button As Button
     Friend WithEvents Label31 As Label
-    Friend WithEvents Button1 As Button
-    Friend WithEvents tab_beginDate As DateTimePicker
+    Friend WithEvents checkHistory_button As Button
+    Friend WithEvents history_beginDate As DateTimePicker
     Friend WithEvents Label18 As Label
-    Friend WithEvents tab_endDate As DateTimePicker
+    Friend WithEvents history_endDate As DateTimePicker
     Friend WithEvents Label13 As Label
     Friend WithEvents tab_panel As TabControl
     Friend WithEvents TabPage3 As TabPage
@@ -1193,7 +1196,7 @@ Partial Class RentingForm
     Friend WithEvents Label47 As Label
     Friend WithEvents Label48 As Label
     Friend WithEvents Label49 As Label
-    Friend WithEvents ListBox3 As ListBox
+    Friend WithEvents clientHistory_rentedScooters As ListBox
     Friend WithEvents tab_clients_listbox As ListBox
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents tab_scooterPrice As Label
@@ -1214,7 +1217,7 @@ Partial Class RentingForm
     Friend WithEvents Label28 As Label
     Friend WithEvents Label20 As Label
     Friend WithEvents Label19 As Label
-    Friend WithEvents ListBox2 As ListBox
+    Friend WithEvents scooterHistory_clients As ListBox
     Friend WithEvents tab_scooters_listbox As ListBox
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents Label64 As Label
