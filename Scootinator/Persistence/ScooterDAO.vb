@@ -52,14 +52,14 @@
         Return DBBroker.GetBroker.Change("DELETE FROM SCOOTERS WHERE ScooterId = " & s.ScooterId & ";")
     End Function
 
-    Public Sub ScooterRented(c As Client, beginDate As DateTime, endDate As DateTime)
+    Public Sub ScooterRented(c As Client, beginDate As Date, endDate As Date)
         Dim aux As Scooter
 
         Me._dbReader = DBBroker.GetBroker.Read("SELECT Scooter
                                                 FROM RENTALS, BOOKINGS
                                                 WHERE BookingID = Booking 
                                                 AND Client = '" & c.ClientId & "'
-                                                AND (BookingDate BETWEEN #" & beginDate.Date & "# AND #" & endDate.Date & "#)
+                                                AND BookingDate BETWEEN #" & beginDate & "# AND #" & endDate & "#
                                                 GROUP BY Scooter;")
 
         While Me._dbReader.Read

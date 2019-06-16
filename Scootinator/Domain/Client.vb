@@ -97,7 +97,7 @@
         Me._daoClient.ClientsRentedScooter(s, beginDate, endDate)
     End Sub
 
-    Public Sub ClientsHistory(beginDate As DateTime, endDate As DateTime)
+    Public Sub ClientsHistory(beginDate As Date, endDate As Date)
         Me._daoClient.ClientsHistory(beginDate, endDate)
     End Sub
 End Class

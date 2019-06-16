@@ -1,7 +1,5 @@
 ﻿Public Class RentingForm
 
-    Private total As Integer
-
     Private Sub RentingForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Dim client As Client = New Client
         Dim aux_client As Client
@@ -112,6 +110,7 @@
     Private Sub Add_scooter_Click(sender As Object, e As EventArgs) Handles add_scooter.Click
         Dim scooter As Scooter = New Scooter With {.ScooterId = Convert.ToInt32(scooter_available_listbox.SelectedItem)}
         Dim scooterType As ScooterType
+        Dim total As Integer = Convert.ToInt32(total_price.Text)
 
         FreeScootersInfo()
 
@@ -139,6 +138,7 @@
     Private Sub Remove_scooter_Click(sender As Object, e As EventArgs) Handles remove_scooter.Click
         Dim scooter As Scooter = New Scooter With {.ScooterId = Convert.ToInt32(scooter_renting_listbox.SelectedItem)}
         Dim scooterType As ScooterType
+        Dim total As Integer = Convert.ToInt32(total_price.Text)
 
         FreeScootersInfo()
 

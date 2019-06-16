@@ -321,7 +321,7 @@ Partial Class RentingForm
         '
         'end_dateTime
         '
-        Me.end_dateTime.CustomFormat = "HH:mm"
+        Me.end_dateTime.CustomFormat = "HH:00"
         Me.end_dateTime.Enabled = False
         Me.end_dateTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.end_dateTime.Location = New System.Drawing.Point(151, 335)
@@ -344,6 +344,7 @@ Partial Class RentingForm
         '
         'DateTimePicker1
         '
+        Me.DateTimePicker1.CustomFormat = "DD/MM/YYYY"
         Me.DateTimePicker1.Enabled = False
         Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.DateTimePicker1.Location = New System.Drawing.Point(151, 281)
@@ -528,6 +529,7 @@ Partial Class RentingForm
         '
         'history_beginDate
         '
+        Me.history_beginDate.CustomFormat = "DD/MM/YYYY"
         Me.history_beginDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.history_beginDate.Location = New System.Drawing.Point(154, 72)
         Me.history_beginDate.Name = "history_beginDate"
@@ -546,6 +548,7 @@ Partial Class RentingForm
         '
         'history_endDate
         '
+        Me.history_endDate.CustomFormat = "DD/MM/YYYY"
         Me.history_endDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.history_endDate.Location = New System.Drawing.Point(154, 104)
         Me.history_endDate.Name = "history_endDate"
