@@ -120,6 +120,8 @@ Partial Class RentingForm
         Me.title = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.ranking_earnings = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.tab_panel.SuspendLayout()
@@ -975,6 +977,8 @@ Partial Class RentingForm
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.ranking_earnings)
+        Me.TabPage2.Controls.Add(Me.Label26)
         Me.TabPage2.Controls.Add(Me.Label64)
         Me.TabPage2.Controls.Add(Me.Label61)
         Me.TabPage2.Controls.Add(Me.Label57)
@@ -997,7 +1001,7 @@ Partial Class RentingForm
         Me.Label64.Name = "Label64"
         Me.Label64.Size = New System.Drawing.Size(320, 15)
         Me.Label64.TabIndex = 49
-        Me.Label64.Text = "ScooterTypes are ordered in a descendent order:"
+        Me.Label64.Text = "ScooterTypes are ordered in a descending order:"
         '
         'Label61
         '
@@ -1020,9 +1024,10 @@ Partial Class RentingForm
         Me.Label58.AutoSize = True
         Me.Label58.Location = New System.Drawing.Point(48, 56)
         Me.Label58.Name = "Label58"
-        Me.Label58.Size = New System.Drawing.Size(284, 15)
+        Me.Label58.Size = New System.Drawing.Size(263, 45)
         Me.Label58.TabIndex = 40
-        Me.Label58.Text = "This is the ranking between the given dates"
+        Me.Label58.Text = "This is the ranking of the Scooter Types " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "that have earned the highest amount " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) &
+    "of money between the given dates"
         '
         'Label54
         '
@@ -1105,6 +1110,23 @@ Partial Class RentingForm
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(77, 636)
         Me.Panel3.TabIndex = 4
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(190, 315)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(68, 15)
+        Me.Label26.TabIndex = 50
+        Me.Label26.Text = "Earnings:"
+        '
+        'ranking_earnings
+        '
+        Me.ranking_earnings.AutoSize = True
+        Me.ranking_earnings.Location = New System.Drawing.Point(299, 315)
+        Me.ranking_earnings.Name = "ranking_earnings"
+        Me.ranking_earnings.Size = New System.Drawing.Size(0, 15)
+        Me.ranking_earnings.TabIndex = 51
         '
         'RentingForm
         '
@@ -1234,4 +1256,6 @@ Partial Class RentingForm
     Friend WithEvents Panel3 As Panel
     Friend WithEvents Label25 As Label
     Friend WithEvents Label24 As Label
+    Friend WithEvents ranking_earnings As Label
+    Friend WithEvents Label26 As Label
 End Class

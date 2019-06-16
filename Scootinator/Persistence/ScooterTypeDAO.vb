@@ -1,6 +1,16 @@
 ﻿Public Class ScooterTypeDAO
     Private _scooterTypeList As Collection = New Collection
     Private _dbReader As OleDb.OleDbDataReader
+    Private _dictionary As New Dictionary(Of String, Integer)
+
+    Public Property Dict As Dictionary(Of String, Integer)
+        Get
+            Return _dictionary
+        End Get
+        Set(value As Dictionary(Of String, Integer))
+            _dictionary = value
+        End Set
+    End Property
 
     Public Property ScooterTypeList As Collection
         Get
@@ -54,14 +64,19 @@
         Return DBBroker.GetBroker.Change("DELETE FROM SCOOT_TYPE WHERE TypeID = " & st.TypeID & ";")
     End Function
 
-    Public Sub Ranking(beginDate As DateTime, endDate As DateTime)
-        Me._dbReader = DBBroker.GetBroker.Read("SELECT st.TypeID, SUM(b.TotalPrice) AS 'income'
-                                                FROM SCOOT_TYPE st, SCOOTERS s, RENTALS r, BOOKINGS b 
-                                                WHERE b.BookingID = r.Booking AND s.ScooterID = r.Scooter AND s.Type = st.TypeID AND b.BookingDate BETWEEN #" & beginDate.Date & "# AND #" & endDate.Date & "#
-                                                GROUP BY st.TypeID
-                                                ORDER BY 'income';")
+    Public Sub Ranking(beginDate As Date, endDate As Date)
+        Me._dbReader = DBBroker.GetBroker.Read("SELECT TypeID, SUM(PricePerHour*DATEDIFF(""h"", beginTime, endTime))
+                                                FROM SCOOT_TYPE, SCOOTERS, RENTALS, BOOKINGS
+                                                WHERE BookingID = Booking 
+                                                AND Scooter = ScooterID 
+                                                AND Type = TypeID 
+                                                AND BookingDate BETWEEN #" & beginDate.Date.ToString("MM/dd/yyyy") & "# AND #" & endDate.Date.ToString("MM/dd/yyyy") & "# 
+                                                GROUP BY TypeID
+                                                ORDER BY 2 DESC")
+
         While Me._dbReader.Read
             Me._scooterTypeList.Add(_dbReader(0))
+            Me._dictionary.Add(_dbReader(0), _dbReader(1))
         End While
     End Sub
 End Class

@@ -250,6 +250,7 @@
     End Sub
 
     Private Sub CheckHistory_button_Click(sender As Object, e As EventArgs) Handles checkHistory_button.Click
+
         If history_beginDate.Value.Date > history_endDate.Value.Date Then
             MessageBox.Show("Ending Date can't be before the Beginning Date.")
         Else
@@ -279,7 +280,7 @@
                 End Try
             ElseIf tab_panel.SelectedTab.Text Like "Ranking" Then
                 Dim aux As ScooterType = New ScooterType
-
+                ranking_listbox.Items.Clear()
                 Try
                     aux.Ranking(history_beginDate.Value, history_endDate.Value)
                 Catch ex As Exception
@@ -289,7 +290,6 @@
                 For Each scooterType In aux.ScooterTypeDAO.ScooterTypeList
                     ranking_listbox.Items.Add(scooterType)
                 Next
-
             End If
         End If
     End Sub
@@ -331,10 +331,6 @@
                 MessageBox.Show(ex.Message, ex.Source)
             End Try
         End If
-    End Sub
-
-    Private Sub Tab_Scooters_Selection()
-
     End Sub
 
     Private Sub ScooterHistory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles scooterHistory_clients.SelectedIndexChanged
@@ -408,9 +404,12 @@
         If ranking_listbox.SelectedIndex <> -1 Then
             Try
                 scooter_type.Read()
+                scooter_type.Ranking(history_beginDate.Value, history_endDate.Value)
 
                 Label57.Text = scooter_type.TypeID
                 Label61.Text = scooter_type.Brand
+                ranking_earnings.Text = Convert.ToString(scooter_type.ScooterTypeDAO.Dict.Item(scooter_type.TypeID))
+
             Catch ex As Exception
                 MessageBox.Show(ex.Message, ex.Source)
             End Try
