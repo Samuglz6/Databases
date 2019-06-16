@@ -59,7 +59,7 @@
                                                 FROM RENTALS, BOOKINGS
                                                 WHERE BookingID = Booking 
                                                 AND Client = '" & c.ClientId & "'
-                                                AND BookingDate BETWEEN #" & beginDate & "# AND #" & endDate & "#
+                                                AND BookingDate BETWEEN #" & beginDate.ToString("MM/dd/yyyy") & "# AND #" & endDate.ToString("MM/dd/yyyy") & "#
                                                 GROUP BY Scooter;")
 
         While Me._dbReader.Read

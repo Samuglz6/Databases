@@ -23,7 +23,7 @@
 
     Public Function Insert(b As Booking) As Integer
         Return DBBroker.GetBroker.Change("INSERT INTO BOOKINGS(BeginTime, EndTime, Client, BookingDate, TotalPrice)
-                                          VALUES(#" & b.BeginTime & "# , #" & b.EndTime & "# , '" & b.Client & "', #" & b.BookingDate.Date & "#," & b.TotalPrice & ");")
+                                          VALUES(#" & b.BeginTime & "# , #" & b.EndTime & "# , '" & b.Client & "', #" & b.BookingDate.Date.ToString("MM/dd/yyyy") & "#," & b.TotalPrice & ");")
     End Function
 
     Public Sub Read(b As Booking)
@@ -56,7 +56,7 @@
                                                                         FROM SCOOTERS, RENTALS, BOOKINGS
                                                                         WHERE ScooterID = Scooter
                                                                         AND BookingID = Booking
-                                                                        AND BookingDate = #" & bookDate.Date & "#
+                                                                        AND BookingDate = #" & bookDate.Date.ToString("MM/dd/yyyy") & "#
                                                                         AND ((BeginTime >= #" & beginTime & "# 
                                                                               AND BeginTime < #" & endTime & "#)   
                                                                         OR (EndTime <= #" & endTime & "#   

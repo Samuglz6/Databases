@@ -61,7 +61,7 @@
                                                 FROM RENTALS, BOOKINGS
                                                 WHERE BookingID = Booking 
                                                 AND Scooter = " & s.ScooterId & "
-                                                AND BookingDate BETWEEN " & beginDate & "# AND #" & endDate & "#)
+                                                AND BookingDate BETWEEN #" & beginDate.ToString("MM/dd/yyyy") & "# AND #" & endDate.ToString("MM/dd/yyyy") & "#
                                                 GROUP BY Client;")
         While Me._dbReader.Read
             aux = New Client With {.ClientId = Me._dbReader(0)}
@@ -71,14 +71,11 @@
 
     Public Sub ClientsHistory(beginDate As Date, endDate As Date)
         Dim aux As Client
-        MessageBox.Show(beginDate)
-        MessageBox.Show(endDate)
         Me._dbReader = DBBroker.GetBroker.Read("SELECT Client 
                                                 FROM BOOKINGS
-                                                WHERE BookingDate BETWEEN  #" & beginDate & "# AND #" & endDate & "#
+                                                WHERE BookingDate BETWEEN  #" & beginDate.ToString("MM/dd/yyyy") & "# AND #" & endDate.ToString("MM/dd/yyyy") & "#
                                                 GROUP BY Client;")
         While Me._dbReader.Read
-            'MessageBox.Show(Me._dbReader(0))
             aux = New Client With {.ClientId = Me._dbReader(0)}
             Me._clientList.Add(aux)
         End While
