@@ -136,7 +136,7 @@
 
         If IsEmpty(sender) Then
             MessageBox.Show("To modify information, all fields except address must be filled.")
-        ElseIf clientPhone_textbox.Text.Length <> 9 Then
+        ElseIf clientPhone_textbox.Text.Length <> 9 Or Not IsNumeric(clientPhone_textbox.Text) Then
             MessageBox.Show("Telephon number must cointain 9 digits.")
         ElseIf clientID_textbox.Text Like clients_listbox.SelectedItem Then
             Try
@@ -160,7 +160,7 @@
             MessageBox.Show("All fields except address must be filled in order to add a new Client.")
         ElseIf clientID_textbox.Text.Length <> 9 Then
             MessageBox.Show("ID must contains 8 numbers followed by a letter from A to Z.")
-        ElseIf clientPhone_textbox.Text.Length <> 9 Then
+        ElseIf clientPhone_textbox.Text.Length <> 9 Or Not IsNumeric(clientPhone_textbox.Text) Then
             MessageBox.Show("Telephon number must cointain 9 digits.")
         ElseIf clientID_textbox.Text.ToUpper Like "########[A-Z]" Then
             client = New Client(clientID_textbox.Text.ToUpper, clientName_textbox.Text, clientPhone_textbox.Text, clientAddress_textbox.Text, clientEmail_textbox.Text)
@@ -201,6 +201,10 @@
 
         If IsEmpty(sender) Then
             MessageBox.Show("To modify information, scooter id and scooter type has to be filled.")
+        ElseIf Not IsNumeric(scooter_type_textbox.Text) Or Not IsNumeric(scooterID_textbox.Text) Then
+            MessageBox.Show("Scooter id nor scooter type can contain characters.")
+        ElseIf Not CheckType(scooter_type_textbox.Text) Then
+            MessageBox.Show("Scooter type has to be one of the existing types.")
         ElseIf scooterID_textbox.Text Like scooter_listbox.SelectedItem Then
             Try
                 scooter = New Scooter(Convert.ToInt32(scooterID_textbox.Text), scooterDescription_textbox.Text, Convert.ToInt32(scooter_type_textbox.Text))
@@ -220,6 +224,10 @@
 
         If IsEmpty(sender) Then
             MessageBox.Show("All fields except description must be filled in order to add a new Scooter.")
+        ElseIf Not IsNumeric(scooter_type_textbox.Text) Or Not IsNumeric(scooterID_textbox.Text) Then
+            MessageBox.Show("Scooter id nor scooter type can contain characters.")
+        ElseIf Not CheckType(scooter_type_textbox.Text) Then
+            MessageBox.Show("Scooter type has to be one of the existing types.")
         Else
             scooter = New Scooter(Convert.ToInt32(scooterID_textbox.Text), scooterDescription_textbox.Text, Convert.ToInt32(scooter_type_textbox.Text))
             Try
@@ -256,15 +264,18 @@
 
         If IsEmpty(sender) Then
             MessageBox.Show("All fields except description must be filled in order to add a new Scooter Type.")
+        ElseIf Not isNumeric(scooterTypeID_textbox.Text) Or Not IsNumeric(scooterTypeWeight_textbox.Text) Or Not IsNumeric(scooterTypeSpeed_textbox.Text) Or Not IsNumeric(scooterTypePrice_textbox.Text) Then
+            MessageBox.Show("ID, Speed, Weight nor Price can contain characters, only numbers")
         Else
             scooterType = New ScooterType(Convert.ToInt32(scooterTypeID_textbox.Text), Convert.ToString(scooterTypeBrand_textbox.Text), Convert.ToInt32(scooterTypeWeight_textbox.Text), Convert.ToInt32(scooterTypeSpeed_textbox.Text), Convert.ToInt32(scooterTypePrice_textbox.Text))
-            Try
-                scooterType.Insert()
-                scooterType_listbox.Items.Add(scooterType.TypeID)
-                MessageBox.Show("The information of that Scooter type has been added successfully.")
-                ScooterTypes_clear_button_Click(sender, e)
-            Catch ex As Exception
-                MessageBox.Show(ex.Message, ex.Source)
+
+                Try
+                    scooterType.Insert()
+                    scooterType_listbox.Items.Add(scooterType.TypeID)
+                    MessageBox.Show("The information of that Scooter type has been added successfully.")
+                    ScooterTypes_clear_button_Click(sender, e)
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message, ex.Source)
             End Try
         End If
     End Sub
@@ -305,4 +316,16 @@
             End Try
         End If
     End Sub
+
+    Private Function CheckType(type As Integer)
+        Dim found As Boolean = False
+
+        For Each aux In scooterType_listbox.Items
+            If type = aux Then
+                found = True
+            End If
+        Next
+
+        Return found
+    End Function
 End Class
